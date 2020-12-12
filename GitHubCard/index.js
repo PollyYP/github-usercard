@@ -39,8 +39,6 @@ loadOurData();
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
-
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -105,11 +103,23 @@ function createMarkup({ data }) {
 }
 
 const divCards = document.querySelector("div.cards");
-axios
-  .get("https://api.github.com/users/PollyYP")
-  .then(({ data }) => {
-    const card = createMarkup({ data });
-    divCards.appendChild(card);
+const followersArray = [
+  "tetondan",
+  "dustinmyers",
+  "justsml",
+  "luishrd",
+  "bigknell",
+  "PollyYP",
+];
+
+followersArray
+  .forEach((nameOfUsers) => {
+    axios
+      .get(`https://api.github.com/users/${nameOfUsers}`)
+      .then(({ data }) => {
+        const card = createMarkup({ data });
+        divCards.appendChild(card);
+      });
   })
   .catch((err) => console.log(err));
 
