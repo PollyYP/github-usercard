@@ -61,7 +61,7 @@ const followersArray = [];
     </div>
 */
 
-function createMarkup(user) {
+function createMarkup({ data }) {
   let githubCard = document.createElement("div");
   let image = document.createElement("img");
   let cardInfo = document.createElement("div");
@@ -79,15 +79,16 @@ function createMarkup(user) {
   name.classList.add("name");
   userName.classList.add("username");
 
-  image.src = user.avatar_url;
-  name.textContent = user.name;
-  userName.textContent = user.login;
-  location.textContent = `Location: ${user.location}`;
+  image.src = data.avatar_url;
+  name.textContent = data.name;
+  userName.textContent = data.login;
+  location.textContent = `Location: ${data.location}`;
   profile.textContent = `Profile: ${link}`;
-  link.href = user.html_url;
-  followerCount.textContent = user.followers;
-  followingCount.textContent = user.following;
-  UserBio.textContent = user.bio;
+  link.href = data.html_url;
+  link.textContent = link.href;
+  followerCount.textContent = data.followers;
+  followingCount.textContent = data.following;
+  UserBio.textContent = data.bio;
 
   githubCard.appendChild(image);
   githubCard.appendChild(cardInfo);
@@ -99,7 +100,18 @@ function createMarkup(user) {
   cardInfo.appendChild(followerCount);
   cardInfo.appendChild(followingCount);
   cardInfo.appendChild(UserBio);
+
+  return githubCard;
 }
+
+const divCards = document.querySelector("div.cards");
+axios
+  .get("https://api.github.com/users/PollyYP")
+  .then(({ data }) => {
+    const card = createMarkup({ data });
+    divCards.appendChild(card);
+  })
+  .catch((err) => console.log(err));
 
 /*
   List of LS Instructors Github username's:
