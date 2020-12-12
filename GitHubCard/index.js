@@ -2,7 +2,18 @@
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
-*/
+    */
+
+const loadOurData = async () => {
+  try {
+    const response = await axios.get("https://api.github.com/users/PollyYP");
+    console.log(`${response.data}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+loadOurData();
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -49,6 +60,46 @@ const followersArray = [];
       </div>
     </div>
 */
+
+function createMarkup(user) {
+  let githubCard = document.createElement("div");
+  let image = document.createElement("img");
+  let cardInfo = document.createElement("div");
+  let name = document.createElement("h3");
+  let userName = document.createElement("p");
+  let location = document.createElement("p");
+  let profile = document.createElement("p");
+  let link = document.createElement("a");
+  let followerCount = document.createElement("p");
+  let followingCount = document.createElement("p");
+  let UserBio = document.createElement("p");
+
+  githubCard.classList.add("card");
+  cardInfo.classList.add("card-info");
+  name.classList.add("name");
+  userName.classList.add("username");
+
+  image.src = user.avatar_url;
+  name.textContent = user.name;
+  userName.textContent = user.login;
+  location.textContent = `Location: ${user.location}`;
+  profile.textContent = `Profile: ${link}`;
+  link.href = user.html_url;
+  followerCount.textContent = user.followers;
+  followingCount.textContent = user.following;
+  UserBio.textContent = user.bio;
+
+  githubCard.appendChild(image);
+  githubCard.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  profile.appendChild(link);
+  cardInfo.appendChild(followerCount);
+  cardInfo.appendChild(followingCount);
+  cardInfo.appendChild(UserBio);
+}
 
 /*
   List of LS Instructors Github username's:
